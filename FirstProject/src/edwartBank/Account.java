@@ -3,9 +3,11 @@ package edwartBank;
 public class Account {
 
 	private String name;
-	private int sum, pin;
+	private int sum, pin, failedAttempts;
 	private boolean mustChangePin;
 	private boolean activeAccount;
+	private boolean locked;
+	
 	
 	public Account(String name, int sum) {
 		this.name = name;
@@ -17,6 +19,8 @@ public class Account {
 		}
 		
 		this.pin = 1111;
+		this.failedAttempts = 0;
+		this.locked = false;
 		this.mustChangePin = true;
 		this.activeAccount = false;
 	}
@@ -83,6 +87,29 @@ public class Account {
 			activeAccount = false;
 			return "Account is deactivated, Gudbay * please note we'll keep your money THANK YOU BYE ! (jk)";
 		}
+	}
+	
+	public String checkPin(int enteredPin) {
+	    if (locked) return "Account locked";
+
+	    if (enteredPin == pin) {
+	        failedAttempts = 0;
+	        return "Login successful";
+	    }
+
+	    failedAttempts++;
+
+	    if (failedAttempts >= 3) {
+	        locked = true;
+	        return "Account locked";
+	    }
+
+	    return "Wrong pin (" + failedAttempts + "/3)";
+	}
+	
+	public String lockedAccount() {
+		if(locked) return "Your account is locked";
+		else return null;
 	}
 	
 	public String canOperateMessage() {

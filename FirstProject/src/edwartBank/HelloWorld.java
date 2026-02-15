@@ -5,18 +5,7 @@ public class HelloWorld {
 
 
 	
-    public static void main(String[] args) {
-    
-    	int totalSeconds = 0;
-    	for(int i = 0; i <= 7200; i++) {
-    		  int hours = totalSeconds / 3600;
-    		  int minutes = (totalSeconds % 3600) / 60;
-    		  int seconds = totalSeconds % 60;
-	    	System.out.println((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds: seconds));
-	    	totalSeconds++;
-    	}
-    	
-    	
+    public static void main(String[] args) {	
     
         Scanner myObj = new Scanner(System.in);
         int selected = 0;
@@ -59,30 +48,27 @@ public class HelloWorld {
             String select = myObj.nextLine();
             String block = acc.canOperateMessage();
             try {
-                selected = Integer.parseInt(select);
+            	selected = Integer.parseInt(select);
 
                 if (selected == 1) {
                     System.out.println(acc.getInfo());
                 } else if (selected == 2) {
-                	if(block != null) {
-                		System.out.println(block);
-                	} else {                		
-	                    System.out.print("Enter amount to add: ");
-	                    int amount = Integer.parseInt(myObj.nextLine());
-	                    System.out.println(acc.addBalance(amount));
+                	
+                	if(requireAccess(acc, myObj)) {
+                			System.out.println("Enter amount to add: ");
+                			int amount = Integer.parseInt(myObj.nextLine());
+                			System.out.println(acc.addBalance(amount));
                 	}
+                	
                 } else if(selected == 3) {
-                	if(block != null) {
-                		System.out.println(block);
-                	} else {                		
+                	if(requireAccess(acc,myObj)) {	
                 		System.out.println("Enter amount to withdraw: ");
                 		int amount = Integer.parseInt(myObj.nextLine());
                 		System.out.println(acc.withdraw(amount));
                 	}
+                	
                 } else if (selected == 4) {
-                	if(block != null) {
-                		System.out.println(block);
-                	} else {                		
+                	if(requireAccess(acc, myObj)) {	
                 		System.out.println(acc.getBalance());
                 	}
                 } else if(selected == 5){
@@ -107,6 +93,24 @@ public class HelloWorld {
 
         System.out.println("Goodbye!");
         myObj.close();
+    }
+    
+    
+    public static boolean requireAccess(Account acc, Scanner sc) {
+
+        String block = acc.canOperateMessage();
+        if (block != null) {
+            System.out.println(block);
+            return false;
+        }
+
+        System.out.println("Enter pin:");
+        int tryPin = Integer.parseInt(sc.nextLine());
+
+        String access = acc.checkPin(tryPin);
+        System.out.println(access);
+
+        return access.equals("Login successful");
     }
     
     
