@@ -3,15 +3,17 @@ package bankApp;
 public class Account {
 
 	private String name;
+	private String email;
+
 	private int sum, pin, failedAttempts;
 	private boolean mustChangePin;
 	private boolean activeAccount;
 	private boolean locked;
 	
 	
-	public Account(String name, int sum) {
+	public Account(String name, String email, int sum) {
 		this.name = name;
-		
+		this.email = email;
 		if(sum < 0) {
 			this.sum = 0;
 		} else {
@@ -26,7 +28,7 @@ public class Account {
 	}
 	
 	public String getInfo() {
-		return "\nAccount info: " + name  + "\nSum: " + sum;
+		return "\nAccount info: " + name  + "\nEmail: " + email  + "\nSum: " + sum;
 	}
 	
 	public String getBalance() {
@@ -88,28 +90,22 @@ public class Account {
 			return "Account is deactivated, Gudbay * please note we'll keep your money THANK YOU BYE ! (jk)";
 		}
 	}
-	
-	public String checkPin(int enteredPin) {
-	    if (locked) return "Account locked";
 
-	    if (enteredPin == pin) {
-	        failedAttempts = 0;
-	        return "Login successful";
-	    }
+	public boolean checkPin(int enteredPin) {
+		if (locked) return false;
 
-	    failedAttempts++;
+		if (enteredPin == pin) {
+			failedAttempts = 0;
+			return true;
+		}
 
-	    if (failedAttempts >= 3) {
-	        locked = true;
-	        return "Account locked";
-	    }
+		failedAttempts++;
 
-	    return "Wrong pin (" + failedAttempts + "/3)";
-	}
-	
-	public String lockedAccount() {
-		if(locked) return "Your account is locked";
-		else return null;
+		if (failedAttempts >= 3) {
+			locked = true;
+		}
+
+		return false;
 	}
 	
 	public String canOperateMessage() {
@@ -123,12 +119,11 @@ public class Account {
 		return "You must change your pin first";
 	}
 	
-	public boolean mustChangePin() {
-		return mustChangePin;
-	}
-	
 	public boolean isAccountActive() {
 		return activeAccount;
 	}
+
+	public String getEmail() { return email; }
+	public int getPin() { return pin; }
 }
 

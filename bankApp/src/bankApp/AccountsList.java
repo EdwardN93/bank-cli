@@ -15,8 +15,17 @@ public class AccountsList {
 
     public void printAllAccounts(){
         for(Account acc : accountsDb){
-            System.out.println(acc);
+            System.out.println(acc.getInfo());
         }
+    }
+
+    public Account login(String email, int pin){
+        for(Account acc : accountsDb){
+            if(acc.getEmail().equals(email) && acc.getPin() == pin){
+                return acc;
+            }
+        }
+        return null;
     }
 
 }
