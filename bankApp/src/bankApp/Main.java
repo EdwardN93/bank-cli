@@ -67,7 +67,8 @@ public class Main {
                 	String conf= myObj.nextLine();
                 	if(conf.equalsIgnoreCase("y")) {
                 		System.out.println(acc.deactivateAccount());
-                		break;
+                        acc = startFlow(myObj, db);
+                		continue;
                 	} else continue;
                 } else if (selected == 7) {
                     System.out.println("Logged out.");

@@ -124,6 +124,5 @@ public class Account {
 	}
 
 	public String getEmail() { return email; }
-	public int getPin() { return pin; }
 }
 

@@ -21,8 +21,13 @@ public class AccountsList {
 
     public Account login(String email, int pin){
         for(Account acc : accountsDb){
-            if(acc.getEmail().equals(email) && acc.getPin() == pin){
-                return acc;
+            if(acc.getEmail().equals(email)){
+                if(!acc.isAccountActive()){
+                    return null;
+                }
+                if(acc.checkPin(pin)){
+                    return acc;
+                }
             }
         }
         return null;
