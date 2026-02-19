@@ -1,4 +1,4 @@
-package edwartBank;
+package bankApp;
 
 public class Account {
 

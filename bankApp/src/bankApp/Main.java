@@ -1,7 +1,7 @@
-package edwartBank;
+package bankApp;
 import java.util.Scanner;
 
-public class HelloWorld {
+public class Main {
 
 
 	
